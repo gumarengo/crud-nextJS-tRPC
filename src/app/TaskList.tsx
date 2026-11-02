@@ -19,16 +19,16 @@ export default function TaskList({ initialTasks }: { initialTasks: Task[] }) {
 
     const deleteMutation = trpc.deleteTask.useMutation({
         onSuccess: () => {
-            setMsg({ text: 'Tarefa deletada com sucesso!', type: 'success' });
+            setMsg({ text: 'Task deleted successfully!', type: 'success' });
             refetch()
         },
         onError: () => {
-            setMsg({ text: 'Erro ao deletar a tarefa.', type: 'error' });
+            setMsg({ text: 'Error deleting task.', type: 'error' });
         },
     });
 
     const handleDelete = (id: string) => {
-        if (confirm('Tem certeza que deseja deletar esta tarefa?')) {
+        if (confirm('Are you sure you want to delete this task?')) {
             deleteMutation.mutate({ id });
         }
     };
@@ -36,7 +36,7 @@ export default function TaskList({ initialTasks }: { initialTasks: Task[] }) {
     return (
         <div>
             <Link href="/form" className='bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block hover:bg-blue-700'>
-                + Nova Tarefa
+                + New Task
             </Link>
 
             {msg.text && (
@@ -45,7 +45,7 @@ export default function TaskList({ initialTasks }: { initialTasks: Task[] }) {
                 </div>
             )}
             {tasks.length === 0 ? (
-                <p className="text-gray-500">Nenhuma tarefa encontrada.</p>
+                <p className="text-gray-500">No tasks found.</p>
             ) : (
                 <ul className="space-y-3">
                     {tasks.map(task => (
@@ -53,17 +53,17 @@ export default function TaskList({ initialTasks }: { initialTasks: Task[] }) {
                             <div>
                                 <h3 className="font-bold text-gray-900 text-lg">{task.titulo}</h3>
                                 {task.descricao && <p className="text-gray-600 text-sm">{task.descricao}</p>}
-                                <p className="text-sm text-gray-500">Criado em: {new Date(task.dataCriacao).toLocaleString()}</p>
+                                <p className="text-sm text-gray-500">Created at: {new Date(task.dataCriacao).toLocaleString()}</p>
                             </div>
                             <div>
                                 <Link href={`/form?id=${task.id}`} className="text-blue-500 mr-5 hover:underline">
-                                    Editar
+                                    Edit
                                 </Link>
                                 <button
                                     onClick={() => handleDelete(task.id)}
                                     disabled={deleteMutation.isPending}
                                     className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
-                                    Deletar
+                                    Delete
                                 </button>
                             </div>
                         </li>

@@ -17,7 +17,7 @@ export const appRouter = router({
 
     createTask: publicProcedure
         .input(z.object({
-            titulo: z.string().min(1, "Titulo é obrigatório"),
+            titulo: z.string().min(1, "Title is required"),
             descricao: z.string().optional()
         }))
         .mutation(({ input }) => {
@@ -34,7 +34,7 @@ export const appRouter = router({
     updateTask: publicProcedure
         .input(z.object({
             id: z.string(),
-            titulo: z.string().min(1, "Titulo é obrigatório"),
+            titulo: z.string().min(1, "Title is required"),
             descricao: z.string().optional()
         }))
         .mutation(({ input }) => {
@@ -42,7 +42,7 @@ export const appRouter = router({
             if (taskIndex === -1) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
-                    message: 'Tarefa Não Encontrada'
+                    message: 'Task not found'
                 });
             }
             tasks[taskIndex] = {
@@ -62,7 +62,7 @@ export const appRouter = router({
             if (!taskExists) {
                 throw new TRPCError({
                     code: 'NOT_FOUND',
-                    message: 'Tarefa Não Encontrada'
+                    message: 'Task not found'
                 });
             }
             tasks = tasks.filter((t) => t.id !== input.id);

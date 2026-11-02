@@ -22,7 +22,7 @@ export default function TaskForm() {
                 setTitulo(task.titulo);
                 setDescricao(task.descricao || '');
             } else {
-                setError('Tarefa não encontrada.');
+                setError('Task not found.');
             }
         }
     }, [editId, tasks]);
@@ -35,7 +35,7 @@ export default function TaskForm() {
         setError('');
 
         if (!titulo) {
-            setError('O título é obrigatório.');
+            setError('Title is required.');
             return;
         }
 
@@ -47,7 +47,7 @@ export default function TaskForm() {
             }
             router.push('/');
         } catch (err) {
-            setError((err as Error).message || 'Ocorreu um erro ao salvar a tarefa.');
+            setError((err as Error).message || 'An error occurred while saving the task.');
         }
     };
 
@@ -55,13 +55,13 @@ export default function TaskForm() {
 
     return (
         <main className="max-w-md text-gray-900 mx-auto bg-white p-6 rounded shadow mt-10">
-            <h1 className="text-2xl font-bold mb-4">{editId ? 'Editar Tarefa' : 'Criar Tarefa'}</h1>
+            <h1 className="text-2xl font-bold mb-4">{editId ? 'Edit Task' : 'Create Task'}</h1>
 
             {error && <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">{error}</div>}
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div>
-                    <label className="block text-sm font-medium mb-1">Título</label>
+                    <label className="block text-sm font-medium mb-1">Title</label>
                     <input
                         type="text"
                         className="w-full border rounded p-2 focus:outline-blue-500"
@@ -70,7 +70,7 @@ export default function TaskForm() {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium mb-1">Descrição</label>
+                    <label className="block text-sm font-medium mb-1">Description</label>
                     <textarea
                         value={descricao}
                         rows={3}
@@ -80,13 +80,13 @@ export default function TaskForm() {
                 </div>
 
                 <div className="flex justify-between items-center mt-2">
-                    <Link href="/" className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Cancelar</Link>
+                    <Link href="/" className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Cancel</Link>
                     <button
                         type="submit"
                         disabled={isPending}
                         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
                     >
-                        {isPending ? 'Salvando...' : 'Salvar'}
+                        {isPending ? 'Saving...' : 'Save'}
                     </button>
                 </div>
             </form>
